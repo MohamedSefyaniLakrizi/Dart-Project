@@ -1,9 +1,40 @@
 CREATE DATABASE dartdb;
 
-CREATE TABLE customers (
-    id SERIAL PRIMARY KEY NOT NULL,
-    name VARCHAR(255),
-    email VARCHAR(255),
-    rib varchar(24),
-    password VARCHAR(255)
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  is_app_admin BOOLEAN DEFAULT FALSE,
+  phone_number VARCHAR(50),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE rounds (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  admin_id INTEGER NOT NULL REFERENCES users(id),
+  amount INTEGER NOT NULL,
+  duration INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE participants (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  round_id INTEGER NOT NULL REFERENCES rounds(id),
+  joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE payments (
+  id SERIAL PRIMARY KEY,
+  round_id INTEGER NOT NULL REFERENCES rounds(id),
+  sender_id INTEGER NOT NULL REFERENCES users(id),
+  receiver_id INTEGER NOT NULL REFERENCES users(id),
+  amount INTEGER NOT NULL,
+  month INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+

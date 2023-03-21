@@ -6,21 +6,22 @@ const validInfo = require('../middleware/validInfo');
 const authorization = require('../middleware/authorization');
 
 router.post('/register', validInfo, async (req, res) => {
-    const user = await pool.query("SELECT * FROM customers WHERE email = $1", [req.body.email]);
+    const user = await pool.query("SELECT * FROM users WHERE email = $1", [req.body.email]);
     if (user.rows.length !== 0) {
         return res.status(401).json("User already exists");
     }
     try {
-        const { name, email, password, rib } = req.body;
+        const { username, email, password } = req.body;
         bcrypt.hash(password, 12, async function(err, hash) {
             const newUser = await pool.query(
-                "INSERT INTO customers (name, email, rib, password) VALUES ($1, $2, $3, $4) RETURNING *",
-                [name, email, rib, hash]
+                "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
+                [username, email, hash]
             );
             const jwtToken = jwtgenerator(newUser.rows[0].id) 
             return res.json({ jwtToken });
         });
     } catch (err) {
+        console.log("there is an error");
         console.error(err.message);
     }   
     
@@ -29,7 +30,7 @@ router.post('/register', validInfo, async (req, res) => {
 router.post('/login',validInfo, async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await pool.query("SELECT * FROM customers WHERE email = $1", [
+        const user = await pool.query("SELECT * FROM users WHERE email = $1", [
             email
         ]);
         console.log(user.rows[0]);

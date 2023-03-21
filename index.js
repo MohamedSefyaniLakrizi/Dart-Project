@@ -18,6 +18,8 @@ app.use("/auth", require("./routes/jwtAuth"));
 //log in//
 app.use("/dashboard", require("./routes/dashboard"));
 
+app.use("/round", require("./routes/round"));
+
 //update the db//
 
 
