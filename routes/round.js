@@ -21,6 +21,9 @@ router.post("/add", authorization, async (req, res) => {
         "INSERT INTO rounds (name, admin_id, amount, duration) VALUES ($1, $2, $3, $4) RETURNING *",
         [name, req.user.id, amount, duration]
       );
+      pool.query('INSERT INTO participants (user_id, round_id) VALUES ($1, $2) RETURNING *',
+        [req.user.id, newRound.rows[0].id]
+      );
       res.json(newRound.rows[0]);
     } catch (error) {
       console.log(error.message);
@@ -30,7 +33,6 @@ router.post("/add", authorization, async (req, res) => {
   
   router.post("/add-member", authorization, async (req, res) => {
     const { roundId, memberId } = req.body;
-  
     try {
       const newParticipant = await pool.query(
         "INSERT INTO participants (user_id, round_id) VALUES ($1, $2) RETURNING *",

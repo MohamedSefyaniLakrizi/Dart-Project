@@ -7,6 +7,7 @@ CREATE TABLE users (
   password VARCHAR(100) NOT NULL,
   is_app_admin BOOLEAN DEFAULT FALSE,
   phone_number VARCHAR(50),
+  rib VARCHAR(30),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

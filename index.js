@@ -16,7 +16,7 @@ app.use("/auth", require("./routes/jwtAuth"));
 
 
 //log in//
-app.use("/dashboard", require("./routes/dashboard"));
+app.use("/home", require("./routes/home"));
 
 app.use("/round", require("./routes/round"));
 
