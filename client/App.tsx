@@ -1,144 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Register from './Register';
 import Login from './Login';
+import Register from './Register';
 import Home from './Home';
 import Payment from './Payment';
 import Profile from './Profile';
-import NavBar from './components/Navbar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AuthContext from './AuthContext';
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+const BottomTab = createBottomTabNavigator();
 
-const MainTabs = () => {
+function AuthStack() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Payment" component={Payment} />
-      <Tab.Screen name="Profile" component={Profile} />
-    </Tab.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="Login" component={Login} />
+    </Stack.Navigator>
   );
-};
+}
 
-const App = () => {
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+function AppTabs() {
+  return (
+    <BottomTab.Navigator screenOptions={{ headerShown: false }}>
+      <BottomTab.Screen name="Home" component={Home} />
+      <BottomTab.Screen name="Payment" component={Payment} />
+      <BottomTab.Screen name="Profile" component={Profile} />
+    </BottomTab.Navigator>
+  );
+}
+
+const App: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    (async () => {
+    const checkAuth = async () => {
       try {
-        const registered = await AsyncStorage.getItem('isRegistered');
-        if (registered !== null) {
-          setIsRegistered(true);
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+          setIsAuthenticated(true);
         }
       } catch (error) {
-        console.error('Error reading AsyncStorage:', error);
-      } finally {
-        setIsLoading(false);
+        console.error('Error retrieving authentication token:', error);
       }
-    })();
+    };
+    checkAuth();
   }, []);
 
-  const onRegistered = () => {
-    setIsRegistered(true);
-  };
-
-
-  const renderContent = () => {
-    if (isLoading) {
-      return null;
-    }
-
-    if (!isRegistered) {
-      return <Register onRegistered={handleRegistration} />;
-    }
-
-    return <MainTabs />;
-  };
-
-  const handleRegistration = () => {
-    setIsRegistered(true);
-  };
-
-  return <NavigationContainer>{renderContent()}</NavigationContainer>;
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {!isAuthenticated ? (
+          <>
+            <Stack.Screen name="Auth" component={AuthStack} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="AppTabs" component={AppTabs} />
+          </>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+    </AuthContext.Provider>
+  );
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*type RootStackParamList = {
-  Register: undefined;
-  Login: undefined;
-  Home: undefined;
-  Payment: undefined;
-  Profile: undefined;
-};
-
-const Stack = createStackNavigator<RootStackParamList>();
-
-
-
-const App = () => {
-  const [userStatus, setUserStatus] = useState<string | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  const onRegistrationSuccess = () => {
-    setUserStatus('registered');
-  };
-
-  useEffect(() => {
-    checkUserStatus();
-  }, []);
-
-  const checkUserStatus = async () => {
-    try {
-      const status = await AsyncStorage.getItem('userStatus');
-      if (status !== null) {
-        setUserStatus(status);
-      } else {
-        setUserStatus('firstTime');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
-        <Stack.Screen name="Register" component={Register} options={{ title: 'Register' }} />
-        <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
-        <Stack.Screen name="Payment" component={Payment} options={{ title: 'Payment' }} />
-        <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
-
-export default App;*/

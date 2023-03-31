@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuthContext } from './AuthContext';
 
 type RootStackParamList = {
   Register: undefined;
@@ -25,8 +26,7 @@ type LoginProps = {
   };
 
 const Login: React.FC<LoginProps> = ({ navigation }) => {
-    navigation.navigate('Home');
-
+  const { isAuthenticated, setIsAuthenticated } = useAuthContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -65,8 +65,9 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
         await storeToken(data.jwtToken);
         await AsyncStorage.setItem('token', data.jwtToken);
         console.log('Token stored:', data.jwtToken);
-
+        setIsAuthenticated(true);
         navigation.navigate('Home');
+        
         
       } else {
         setErrorMessage(data.message || 'Login failed');

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 
+
 const Home: React.FC = () => {
     const [user, setUser] = useState<{ username: string } | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
@@ -51,7 +52,7 @@ const Home: React.FC = () => {
           ) : (
             <Text>Loading...</Text>
           )}
-          
+
         </View>
       );
       
