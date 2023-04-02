@@ -55,7 +55,7 @@ const App: React.FC = () => {
     const checkAuth = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/auth/is-verify', {
+        const response = await fetch('https://dart-d99e.onrender.com/auth/is-verify', {
         method: 'GET',
         headers: {
           'token': token,

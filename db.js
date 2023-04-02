@@ -1,7 +1,7 @@
 const Pool = require('pg').Pool;
 
 const pool = new Pool({
-    user: 'postgres',
+    user: 'dartdb_user',
     password: 'eXHu4irRScCwmwG8MfDxGEQgZ3dNq5qS',
     host: 'dpg-cgkg95u4dad69r2c1eg0-a',
     port: 5432,

@@ -27,7 +27,7 @@ const AddRound: React.FC<AddRoundProps> = ({navigation}) => {
     
     try {
         const token = await AsyncStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/round/add', {
+        const response = await fetch('https://dart-d99e.onrender.com/round/add', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

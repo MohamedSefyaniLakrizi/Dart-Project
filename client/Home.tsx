@@ -27,7 +27,7 @@ const Home: React.FC<HomeProps> = ({navigation}) => {
             
             
           if (token) {
-            const response = await fetch('http://localhost:5000/home/', {
+            const response = await fetch('https://dart-d99e.onrender.com/home/', {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const Home: React.FC<HomeProps> = ({navigation}) => {
     
           if (token) {
             // Replace this with your actual API endpoint to check if a group is created
-            const response = await fetch('http://localhost:5000/home', {
+            const response = await fetch('https://dart-d99e.onrender.com/home', {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',

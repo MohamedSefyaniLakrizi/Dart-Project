@@ -46,7 +46,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
     setErrorMessage('');
 
     try {
-      const response = await fetch('http://localhost:5000/auth/register', {
+      const response = await fetch('https://dart-d99e.onrender.com/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
