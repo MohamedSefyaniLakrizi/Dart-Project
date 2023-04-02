@@ -15,6 +15,7 @@ router.post("/add-Rib", authorization, async (req, res) => {
             );
             console.log("Rib added successfully");
             console.log(newUser);
+            res.json({ newUser });
         });
     } catch (error) {
         console.log(error.message);
