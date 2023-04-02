@@ -14,7 +14,7 @@ type AddRoundProps = {
     navigation: StackNavigationProp<any>;
   };
 const AddRound: React.FC<AddRoundProps> = ({navigation}) => {
-  const [Rib, setRib] = useState('');
+  const [rib, setRib] = useState('');
 
 
 
@@ -30,7 +30,7 @@ const AddRound: React.FC<AddRoundProps> = ({navigation}) => {
             token: token,
             },
             body: JSON.stringify({
-            Rib,
+            rib,
             }),
         });
         if (response.ok) {
@@ -52,7 +52,7 @@ const AddRound: React.FC<AddRoundProps> = ({navigation}) => {
         style={styles.input}
         placeholder="RIB"
         onChangeText={setRib}
-        value={Rib}
+        value={rib}
         keyboardType="numeric"
       />
       
