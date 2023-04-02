@@ -20,6 +20,8 @@ app.use("/home", require("./routes/home"));
 
 app.use("/round", require("./routes/round"));
 
+app.use("/user", require("./routes/user"));
+
 //update the db//
 
 
