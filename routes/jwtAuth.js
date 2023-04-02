@@ -68,7 +68,6 @@
         try {
             const token = req.header("token");
             const payload = jwt.verify(token, process.env.jwtSecret);
-            console.log({payload});
             res.json(true);
             console.log("authorized");
         } catch (error) {
@@ -77,18 +76,4 @@
             return res.status(500).send("Server error");
         }
     });
-    //Get User Id from jwt token
-    router.get('/get-id', authorization, async (req, res) => {
-        try {
-            const jwtToken = req.header("token");
-            const payload = jwt.verify(jwtToken, process.env.jwtSecret); 
-            console.log(payload.user);
-            res.json(payload.user);
-        } catch (error) {
-            console.error(error.message);
-            return res.status(500).send("Server error");
-        }
-    });
-
-
     module.exports = router;

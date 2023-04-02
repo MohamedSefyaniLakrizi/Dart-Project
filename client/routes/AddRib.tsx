@@ -35,6 +35,8 @@ const AddRound: React.FC<AddRoundProps> = ({navigation}) => {
         });
         if (response.ok) {
             console.log('Rib entered successfully');
+            console.log(response);
+            
             navigation.navigate('AppTabs', { screen: 'AddRibSuccessful' });
         }
     } catch (error) {

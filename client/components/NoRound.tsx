@@ -55,7 +55,7 @@ useEffect(() => {
 
         const data = await response.json();
         
-        console.log(data.user.rib);
+        console.log(data.user);
         
         if (response.ok) {
           if (data.user.rib === null){
