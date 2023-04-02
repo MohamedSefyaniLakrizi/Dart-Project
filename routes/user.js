@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 
 router.post("/add-Rib", authorization, async (req, res) => {
     try {
-        const Rib = req.user.rib;
-        const User = req.user
+        const Rib = req.rib;
+        const User = req.rib
         console.log({ User });
         console.log("RIB is:" + Rib);
         bcrypt.hash(Rib, 12, async function(err, hash) {
