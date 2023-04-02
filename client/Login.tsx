@@ -74,6 +74,8 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
       }
     } catch (error) {
         setErrorMessage('Something went wrong');
+        console.log('Error:', error);
+        
     }
   };
 

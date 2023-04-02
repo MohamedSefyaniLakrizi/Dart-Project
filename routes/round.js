@@ -15,7 +15,7 @@ router.get("/", authorization, async (req, res) => {
 
 router.post("/add", authorization, async (req, res) => {
     const { name, amount, duration } = req.body;
-  
+    console.log("adding new Round");
     try {
       const newRound = await pool.query(
         "INSERT INTO rounds (name, admin_id, amount, duration) VALUES ($1, $2, $3, $4) RETURNING *",
@@ -25,6 +25,7 @@ router.post("/add", authorization, async (req, res) => {
         [req.user.id, newRound.rows[0].id]
       );
       res.json(newRound.rows[0]);
+      console.log("Round added successfully");
     } catch (error) {
       console.log(error.message);
       res.status(500).json("Server Error");
