@@ -5,17 +5,14 @@ const bcrypt = require('bcrypt');
 
 router.post("/add-Rib", authorization, async (req, res) => {
     try {
-        const Rib = req.rib;
-        const User = req.body.rib
-        console.log({ User });
-        console.log("RIB is:" + Rib);
+        const Rib = req.body.rib;
         bcrypt.hash(Rib, 12, async function(err, hash) {
             const newUser = await pool.query(
                 "UPDATE users SET rib = $1 WHERE id = $2;",
                 [Rib ,req.user.id]
             );
             console.log("Rib added successfully");
-            res.json( req.user.rib);
+            res.json({ newUser });
         });
     } catch (error) {
         console.log(error.message);
