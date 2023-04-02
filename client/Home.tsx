@@ -116,14 +116,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#E5F4F8',
   },
   text: {
     fontSize: 24,
+    color: '#222E50',
+    fontWeight: 'bold',
   },
   slide: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#E5F4F8',
   },
 });
 

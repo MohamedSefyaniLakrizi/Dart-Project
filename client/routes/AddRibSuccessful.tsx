@@ -20,16 +20,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#E5F4F8',
   },
   message: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#222E50',
   },
   button: {
     padding: 10,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#007BFF',
     borderRadius: 5,
   },
   buttonText: {

@@ -89,7 +89,7 @@ const AddRound: React.FC<AddRoundProps> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E5F4F8',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#222E50',
   },
   input: {
     width: '80%',
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+    backgroundColor: '#fff',
   },
   button: {
     backgroundColor: '#007BFF',
@@ -116,9 +118,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
-  },    
+  },
   text: {
     fontSize: 18,
+    color: '#222E50',
   },
   picker: {
     width: 200,

@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
+    backgroundColor: '#E5F4F8',
   },
   createGroupButton: {
     backgroundColor: '#007AFF',
@@ -132,10 +133,12 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    borderColor: 'gray',
+    borderColor: '#A3BAC3',
     borderWidth: 1,
     borderRadius: 8,
     paddingLeft: 10,
+    backgroundColor: '#F2F6FA',
+    color: '#222E50',
   },
   button: {
     backgroundColor: '#007BFF',

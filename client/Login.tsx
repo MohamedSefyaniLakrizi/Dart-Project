@@ -111,41 +111,47 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E5F4F8',
     alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
+    color: '#222E50',
     marginBottom: 20,
   },
   input: {
     width: '80%',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
+    borderColor: '#1B9AAA',
+    borderRadius: 10,
     padding: 10,
     marginBottom: 10,
+    fontSize: 16,
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#1B9AAA',
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontWeight: 'bold',
+    fontSize: 16,
   },
   linkText: {
-    color: '#007BFF',
+    color: '#1B9AAA',
     textDecorationLine: 'underline',
+    fontSize: 14,
   },
   errorText: {
-    color: 'red',
+    color: '#222E50',
     marginBottom: 10,
+    fontWeight: 'bold',
   },
 });
 
