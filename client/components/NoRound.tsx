@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AddRound from '../routes/AddRound';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 type NoRoundProps = {
@@ -11,6 +12,7 @@ type NoRoundProps = {
 
 
 const NoRoundComponent: React.FC<NoRoundProps> = ({navigation}) => {
+  const [hasRib, setHasRib] = useState(null);
   const [invitationCode, setInvitationCode] = useState('');
 
   const onCreateRound = () => {
@@ -27,26 +29,85 @@ const NoRoundComponent: React.FC<NoRoundProps> = ({navigation}) => {
     console.log('Send invitation clicked');
     // Add your logic to send an invitation here
   };
-  console.log("in the no round component");
+
+  const goToRib = () => {
+    console.log('Add Rib clicked');
+    // Add your logic to send an invitation here
+    navigation.navigate('AppTabs', { screen: 'AddRib' });
+  }
   
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={onCreateRound} style={styles.createGroupButton}>
-        <Text style={styles.createGroupButtonText}>Create Group</Text>
-      </TouchableOpacity>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={onInputChange}
-          value={invitationCode}
-          placeholder="Enter Invitation Code"
-        />
-        <TouchableOpacity style={styles.button} onPress={sendInvitation}>
-              <Text style={styles.buttonText}>Send Invitation Code</Text>
+  
+
+useEffect(() => {
+  const checkRib = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+
+      if (token) {
+        // Replace this with your actual API endpoint to check if a group is created
+        const response = await fetch('https://dart-d99e.onrender.com/home', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            token: token,
+          },
+        });
+
+        const data = await response.json();
+        
+        console.log(data.user.rib);
+        
+        if (response.ok) {
+          if (data.user.rib === null){
+            console.log('No Rib');
+            setHasRib(false);
+          } else {
+           setHasRib(true);
+            }
+          } else {
+          console.error('Failed to fetch group data');
+          }
+      }
+    } catch (error) {
+      console.error('Error fetching group data:', error);
+    }
+  };
+
+
+
+    checkRib();
+}, []);
+
+
+return (
+  <View style={styles.container}>
+    {hasRib === false ? (
+      <>
+        <Text style={styles.title}>Entrez Votre RIB pour commencer!</Text>
+        <TouchableOpacity onPress={goToRib} style={styles.createGroupButton}>
+          <Text style={styles.createGroupButtonText}>Ajouter le RIB</Text>
         </TouchableOpacity>
-      </View>
-    </View>
-  );
+      </>
+    ) : (
+      <>
+        <TouchableOpacity onPress={onCreateRound} style={styles.createGroupButton}>
+          <Text style={styles.createGroupButtonText}>Create Group</Text>
+        </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={onInputChange}
+            value={invitationCode}
+            placeholder="Enter Invitation Code"
+          />
+          <TouchableOpacity style={styles.button} onPress={sendInvitation}>
+            <Text style={styles.buttonText}>Send Invitation Code</Text>
+          </TouchableOpacity>
+        </View>
+      </>
+    )}
+  </View>
+);
 };
 
 const styles = StyleSheet.create({
@@ -86,6 +147,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 20,
   },
 });
 

@@ -10,6 +10,8 @@ import Profile from './Profile';
 import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import AuthContext from './AuthContext';
 import AddRound from './routes/AddRound';
+import AddRib from './routes/AddRib';
+import AddRibSuccessful from './routes/AddRibSuccessful';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -41,6 +43,8 @@ const AppTabs: React.FC<AppTabsProps> = () => {
     <Stack.Navigator>
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name="AddRound" component={AddRound} options={{ headerShown: true, title: 'Add Round' }} />
+      <Stack.Screen name="AddRib" component={AddRib} options={{ headerShown: true, title: 'Add Rib' }} />
+      <Stack.Screen name="AddRibSuccessful" component={AddRibSuccessful} options={{ headerShown: false, title: 'Add Rib Successful' }} />
     </Stack.Navigator>
   );
 };

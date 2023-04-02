@@ -71,7 +71,9 @@ const Home: React.FC<HomeProps> = ({navigation}) => {
             
             if (response.ok) {
               if (data.participants !== undefined){
+                if(data.user.rib === null)
                 setHasGroup(0);
+                else setHasGroup(2);
               }
               
               else setHasGroup(1);
@@ -93,26 +95,19 @@ const Home: React.FC<HomeProps> = ({navigation}) => {
 
         return (
           <View style={styles.container}>
-            {user ? (
-              hasGroup === null ? (
-                <Text>Loading...</Text>
-              ) : (
-                <Swiper showsButtons={false} loop={false}>
-                  <View style={styles.slide}>
-                    <Text style={styles.text}>Hi {user.username}</Text>
-                  </View>
-                  {hasGroup === 0 && (
-                    <View style={styles.slide}>
-                      <NoRoundComponent navigation={navigation} />
-                    </View>
-                  )}
-                </Swiper>
-              )
-            ) : (
-              <Text>Loading...</Text>
-            )}
-          </View>
-        );
+        {user ? (
+          hasGroup === null ? (
+            <Text>Loading...</Text>
+          ) : hasGroup === 0 ? (
+            <Text style={styles.text}>Hi {user.username}</Text>
+          ) : (
+            <NoRoundComponent navigation={navigation}/>
+          )
+        ) : (
+          <Text>Loading...</Text>
+        )}
+      </View>
+    ) ;
       };
 
 
@@ -142,19 +137,5 @@ export default Home;
               <Text style={styles.text}>Email: {userEmail}</Text>
 */
 
-/*      return (
-        <View style={styles.container}>
-      {user ? (
-        hasGroup === null ? (
-          <Text>Loading...</Text>
-        ) : hasGroup === 0 ? (
-          <Text style={styles.text}>Hi {user.username}</Text>
-        ) : (
-          <NoRoundComponent navigation={navigation}/>
-        )
-      ) : (
-        <Text>Loading...</Text>
-      )}
-    </View>
-  );
+/*      
       */
