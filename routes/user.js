@@ -3,7 +3,7 @@ const pool = require('../db');
 const authorization = require('../middleware/authorization');
 const bcrypt = require('bcrypt');
 
-router.POST("/Add-Rib", authorization, async (req, res) => {
+router.post("/add-Rib", authorization, async (req, res) => {
     try {
         const Rib = req.Rib;
 
