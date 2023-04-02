@@ -7,7 +7,7 @@ function AddRibSuccessful({ navigation }) {
       <Text style={styles.message}>Rib Added Successfully!</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('AppTabs', { screen: 'Home' })}
+        onPress={() => navigation.navigate('MainTabs', { screen: 'Home' })}
       >
         <Text style={styles.buttonText}>Okay</Text>
       </TouchableOpacity>

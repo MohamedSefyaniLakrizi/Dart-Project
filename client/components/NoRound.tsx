@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AddRound from '../routes/AddRound';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -37,47 +37,47 @@ const NoRoundComponent: React.FC<NoRoundProps> = ({navigation}) => {
   }
   
   
-
-useEffect(() => {
-  const checkRib = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-
-      if (token) {
-        // Replace this with your actual API endpoint to check if a group is created
-        const response = await fetch('https://dart-d99e.onrender.com/home', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            token: token,
-          },
-        });
-
-        const data = await response.json();
-        
-        console.log(data.user);
-        
-        if (response.ok) {
-          if (data.user.rib === null){
-            console.log('No Rib');
-            setHasRib(false);
-          } else {
-           setHasRib(true);
+  useFocusEffect(
+    React.useCallback(() => {
+      const checkRib = async () => {
+        try {
+          const token = await AsyncStorage.getItem('token');
+  
+          if (token) {
+            // Replace this with your actual API endpoint to check if a group is created
+            const response = await fetch('https://dart-d99e.onrender.com/home', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                token: token,
+              },
+            });
+  
+            const data = await response.json();
+  
+            console.log(data.user);
+  
+            if (response.ok) {
+              if (data.user.rib === null) {
+                console.log('No Rib');
+                setHasRib(false);
+              } else {
+                setHasRib(true);
+              }
+            } else {
+              console.error('Failed to fetch group data');
             }
-          } else {
-          console.error('Failed to fetch group data');
           }
-      }
-    } catch (error) {
-      console.error('Error fetching group data:', error);
-    }
-  };
-
-
-
-    checkRib();
-}, []);
-
+        } catch (error) {
+          console.error('Error fetching group data:', error);
+        }
+      };
+  
+      checkRib();
+      return () => {};
+    }, [])
+  );
+  
 
 return (
   <View style={styles.container}>
