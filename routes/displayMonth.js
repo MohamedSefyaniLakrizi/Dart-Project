@@ -30,7 +30,7 @@ router.get('/', authorization, async (req, res) => {
     }
 });
 
-app.get('/participant-order/:round_id', async (req, res) => {
+router.get('/participant-order/:round_id', async (req, res) => {
     try {
       const { round_id } = req.params;
   
