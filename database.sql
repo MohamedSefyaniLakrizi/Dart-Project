@@ -1,7 +1,7 @@
 CREATE DATABASE dartdb;
 
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
+  id BIGSERIAL PRIMARY KEY,
   username VARCHAR(255) UNIQUE NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
   password VARCHAR(100) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE rounds (
-  id SERIAL PRIMARY KEY,
+  id BIGSERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   admin_id INTEGER NOT NULL REFERENCES users(id),
   amount INTEGER NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE rounds (
 );
 
 CREATE TABLE participants (
-  id SERIAL PRIMARY KEY,
+  id BIGSERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES users(id),
   round_id INTEGER NOT NULL REFERENCES rounds(id),
   joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -29,7 +29,7 @@ CREATE TABLE participants (
 
 
 CREATE TABLE payments (
-  id SERIAL PRIMARY KEY,
+  id BIGSERIAL PRIMARY KEY,
   round_id INTEGER NOT NULL REFERENCES rounds(id),
   sender_id INTEGER NOT NULL REFERENCES users(id),
   receiver_id INTEGER NOT NULL REFERENCES users(id),
@@ -38,4 +38,13 @@ CREATE TABLE payments (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE participant_order (
+  id BIGSERIAL PRIMARY KEY,
+  round_id INTEGER NOT NULL REFERENCES rounds(id),
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  participant_order INTEGER NOT NULL,
+  UNIQUE (round_id, participant_order),
+  UNIQUE (round_id, user_id),
+  FOREIGN KEY (round_id, user_id) REFERENCES participants(round_id, user_id) ON DELETE CASCADE
+);
 

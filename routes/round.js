@@ -17,8 +17,8 @@ router.post("/add", authorization, async (req, res) => {
     console.log("adding new Round");
     try {
       const newRound = await pool.query(
-        "INSERT INTO rounds (name, admin_id, amount, duration) VALUES ($1, $2, $3, $4) RETURNING *",
-        [name, req.user.id, amount, duration]
+        "INSERT INTO rounds (name, admin_id, amount, duration, start_month) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+        [name, req.user.id, amount, duration, startMonth]
       );
       pool.query('INSERT INTO participants (user_id, round_id) VALUES ($1, $2) RETURNING *',
         [req.user.id, newRound.rows[0].id]
@@ -69,6 +69,19 @@ router.post("/add", authorization, async (req, res) => {
         req.user.id,
       ]);
       res.json("Round deleted.");
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).json("Server Error");
+    }
+  });
+
+  router.get("/get-month-paid", authorization, async (req, res) => {
+    try {
+      const monthPaid = await pool.query(
+        "SELECT * FROM participants WHERE id = $1 AND month BETWEEN $2 AND $3;",
+        [req.user.id, req.body.month, req.body.month + 5]
+      );
+      res.json(monthPaid.rows);
     } catch (error) {
       console.log(error.message);
       res.status(500).json("Server Error");

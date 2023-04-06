@@ -12,6 +12,8 @@ import AuthContext from './AuthContext';
 import AddRound from './routes/AddRound';
 import AddRib from './routes/AddRib';
 import AddRibSuccessful from './routes/AddRibSuccessful';
+import * as Font from 'expo-font';
+
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -51,11 +53,23 @@ const AppTabs: React.FC<AppTabsProps> = () => {
 
 
 const App: React.FC = () => {
+  const [isFontLoaded, setIsFontLoaded] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   console.log("checking authentication");
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        'Lato-Regular': require('./assets/fonts/Lato-Regular.ttf'),
+        'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
+        'Inter-Regular': require('./assets/fonts/Inter-Regular.ttf'),
+        'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
+        'Lato-Bold': require('./assets/fonts/Lato-Bold.ttf'),
+      });
+      setIsFontLoaded(true);
+    }
+    loadFonts();
     const checkAuth = async () => {
       try {
         const token = await AsyncStorage.getItem('token');

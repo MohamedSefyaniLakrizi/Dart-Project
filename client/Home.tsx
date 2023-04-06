@@ -1,11 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NoRoundComponent from './components/NoRound';
 import AddRound from './routes/AddRound';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Swiper from 'react-native-swiper';
-
+import Calendar from './components/Round';
+import Month from './components/roundComponents/Month';
 type HomeProps = {
   navigation: StackNavigationProp<any>;
 };
@@ -99,9 +100,16 @@ const Home: React.FC<HomeProps> = ({navigation}) => {
           hasGroup === null ? (
             <Text>Loading...</Text>
           ) : hasGroup === 0 ? (
+            <View style={styles.container}>
             <Text style={styles.text}>Hi {user.username}</Text>
+            <Month />
+            </View>
           ) : (
+            <View style={styles.container}>
+              <Month />
             <NoRoundComponent navigation={navigation}/>
+            <Calendar />
+            </View >
           )
         ) : (
           <Text>Loading...</Text>
