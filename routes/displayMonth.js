@@ -30,7 +30,7 @@ router.get('/', authorization, async (req, res) => {
     }
 });
 
-router.get('/participant-order/:round_id', async (req, res) => {
+router.get('/participant-order/:round_id', authorization ,async (req, res) => {
     try {
       const { round_id } = req.params;
   
@@ -50,3 +50,5 @@ router.get('/participant-order/:round_id', async (req, res) => {
       res.status(500).send('Error fetching participant order');
     }
   });
+
+module.exports = router;
