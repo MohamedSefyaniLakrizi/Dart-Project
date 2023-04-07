@@ -24,8 +24,10 @@ CREATE TABLE participants (
   id BIGSERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES users(id),
   round_id INTEGER NOT NULL REFERENCES rounds(id),
-  joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (round_id, user_id)
 );
+
 
 
 CREATE TABLE payments (
