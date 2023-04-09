@@ -40,7 +40,7 @@ router.post("/add", authorization, async (req, res) => {
     console.log("adding new Round");
     try {
       const invitationCode = getUniqueInvitationCode();
-      
+      console.log(invitationCode);
       const newRound = await pool.query(
         "INSERT INTO rounds (name, admin_id, amount, duration, invitation_code) VALUES ($1, $2, $3, $4, $5) RETURNING *",
         [name, req.user.id, amount, duration, invitationCode]

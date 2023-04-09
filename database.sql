@@ -17,7 +17,7 @@ CREATE TABLE rounds (
   admin_id INTEGER NOT NULL REFERENCES users(id),
   amount INTEGER NOT NULL,
   duration INTEGER NOT NULL,
-  invitation_link VARCHAR(255),
+  invitation_code VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
