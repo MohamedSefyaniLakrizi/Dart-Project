@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     paddingRight: 0,
     paddingTop: 14,
     paddingBottom: 16,
-    backgroundColor: "rgba(255, 255, 255, 0)",
+    backgroundColor: "rgba(255, 255, 255, 0.01)",
     marginRight: 20,
   },
   Month_Object: {

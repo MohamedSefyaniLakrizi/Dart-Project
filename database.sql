@@ -17,6 +17,7 @@ CREATE TABLE rounds (
   admin_id INTEGER NOT NULL REFERENCES users(id),
   amount INTEGER NOT NULL,
   duration INTEGER NOT NULL,
+  invitation_link VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -49,4 +50,5 @@ CREATE TABLE participant_order (
   UNIQUE (round_id, user_id),
   FOREIGN KEY (round_id, user_id) REFERENCES participants(round_id, user_id) ON DELETE CASCADE
 );
+
 

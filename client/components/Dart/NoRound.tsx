@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import AddRound from '../routes/AddRound';
+import AddRound from '../../routes/AddRound';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 

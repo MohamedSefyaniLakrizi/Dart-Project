@@ -12,6 +12,7 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from './AuthContext';
+import LoadingScreen from './components/LoadingScreen';
 
 type RootStackParamList = {
   Register: undefined;
@@ -26,6 +27,7 @@ type LoginProps = {
   };
 
 const Login: React.FC<LoginProps> = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useAuthContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,6 +47,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
   
 
   const handleLogin = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch('https://dart-d99e.onrender.com/auth/login', {
         method: 'POST',
@@ -77,6 +80,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
         console.log('Error:', error);
         
     }
+    setIsLoading(false);
   };
 
   return (
@@ -104,6 +108,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
       <TouchableOpacity onPress={goToRegister}>
         <Text style={styles.linkText}>Don't have an account? Register</Text>
       </TouchableOpacity>
+      <LoadingScreen isLoading={isLoading} />
     </View>
   );
 };
