@@ -23,7 +23,7 @@ router.post("/add", authorization, async (req, res) => {
     
     // Check if the invitation code already exists in the database
     async function checkInvitationCode(invitationCode) {
-      const result = await db.query(`SELECT COUNT(*) AS rounds FROM invitations WHERE code = ${invitationCode}`);
+      const result = await pool.query(`SELECT COUNT(*) AS rounds FROM invitations WHERE code = ${invitationCode}`);
       return result[0].count > 0;
     }
     
