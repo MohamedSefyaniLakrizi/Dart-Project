@@ -23,7 +23,7 @@ router.post("/add", authorization, async (req, res) => {
     
     // Check if the invitation code already exists in the database
     async function checkInvitationCode(invitationCode) {
-      const result = await pool.query(`SELECT COUNT(*) AS rounds FROM invitations WHERE code = ${invitationCode}`);
+      const result = await pool.query(`SELECT invitation_code FROM rounds WHERE invitation_code = ${invitationCode}`);
       return result[0].count > 0;
     }
     
@@ -39,20 +39,17 @@ router.post("/add", authorization, async (req, res) => {
 
     console.log("adding new Round");
     try {
-      getUniqueInvitationCode().then(async invitationCode => {
-        console.log(invitationCode);
-        // Save the invitation code to the database
-        const newRound = await pool.query(
-          "INSERT INTO rounds (name, admin_id, amount, duration, invitation_code) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-          [name, req.user.id, amount, duration, invitationCode]
-        );
-        pool.query('INSERT INTO participants (user_id, round_id) VALUES ($1, $2) RETURNING *',
-        [req.user.id, newRound.rows[0].id]
-      );
-      res.json(newRound.rows[0]);
-      console.log("Round added successfully");
-      });
+      const invitationCode = getUniqueInvitationCode();
       
+      const newRound = await pool.query(
+        "INSERT INTO rounds (name, admin_id, amount, duration, invitation_code) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+        [name, req.user.id, amount, duration, invitationCode]
+      );
+      pool.query('INSERT INTO participants (user_id, round_id) VALUES ($1, $2) RETURNING *',
+      [req.user.id, newRound.rows[0].id]
+    );
+    res.json(newRound.rows[0]);
+    console.log("Round added successfully");
       
     } catch (error) {
       console.log(error.message);
