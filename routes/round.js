@@ -24,8 +24,9 @@ router.post("/add", authorization, async (req, res) => {
     // Check if the invitation code already exists in the database
     async function checkInvitationCode(invitationCode) {
       const result = await pool.query(`SELECT COUNT(*) FROM rounds WHERE invitation_code = ${invitationCode}`);
-      return result[0].count > 0;
+      return (result.rows.length > 0 && result.rows[0].count > 0);
     }
+    
     
     // Generate a unique invitation code that doesn't exist in the database
     async function getUniqueInvitationCode() {
