@@ -6,6 +6,7 @@ import Login from './Login';
 import Register from './Register';
 import Home from './Home';
 import Payment from './Payment';
+import Dart from './Dart';
 import Profile from './Profile';
 import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import AuthContext from './AuthContext';
@@ -34,6 +35,7 @@ const MainTabs: React.FC = () => {
   return (
     <BottomTab.Navigator screenOptions={{ headerShown: false }}>
       <BottomTab.Screen name="Home" component={Home} />
+      <BottomTab.Screen name="Dart" component={Dart} />
       <BottomTab.Screen name="Payment" component={Payment} />
       <BottomTab.Screen name="Profile" component={Profile} />
     </BottomTab.Navigator>

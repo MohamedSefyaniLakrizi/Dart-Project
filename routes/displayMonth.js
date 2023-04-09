@@ -33,17 +33,21 @@ router.get('/', authorization, async (req, res) => {
 router.get('/participant-order/:round_id', authorization ,async (req, res) => {
     try {
       const { round_id } = req.params;
-  
+      const user_id = req.user.id;
+      console.log('round_id:', round_id);
+      console.log('user_id:', user_id);
       const query = `
-        SELECT po.round_id, po.user_id, po.participant_order,
-               (((12 * (EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM r.created_at)) + (EXTRACT(MONTH FROM CURRENT_DATE) - EXTRACT(MONTH FROM r.created_at))) % r.duration) + 1) AS current_order
-        FROM participant_order po
-        JOIN rounds r ON po.round_id = r.id
-        WHERE po.round_id = $1
-        ORDER BY po.participant_order;
+        SELECT *
+        FROM participant_order
+        WHERE round_id = $1 AND user_id = $2;
       `;
   
-      const { rows } = await pool.query(query, [round_id]);
+      
+
+      const { rows } = await pool.query(query, [round_id,req.user.id]);
+
+      const year = rows.created_at.getFullYear();
+
       res.status(200).json(rows);
     } catch (error) {
       console.error('Error fetching participant order:', error);
