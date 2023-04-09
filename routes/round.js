@@ -46,13 +46,14 @@ router.post("/add", authorization, async (req, res) => {
           "INSERT INTO rounds (name, admin_id, amount, duration, invitation_code) VALUES ($1, $2, $3, $4, $5) RETURNING *",
           [name, req.user.id, amount, duration, invitationCode]
         );
-      });
-      
-      pool.query('INSERT INTO participants (user_id, round_id) VALUES ($1, $2) RETURNING *',
+        pool.query('INSERT INTO participants (user_id, round_id) VALUES ($1, $2) RETURNING *',
         [req.user.id, newRound.rows[0].id]
       );
       res.json(newRound.rows[0]);
       console.log("Round added successfully");
+      });
+      
+      
     } catch (error) {
       console.log(error.message);
       res.status(500).json("Server Error");
