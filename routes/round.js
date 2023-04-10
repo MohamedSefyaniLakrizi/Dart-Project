@@ -102,13 +102,14 @@ router.post("/add", authorization, async (req, res) => {
     }
   });
 
-  router.get("/get-month-paid", authorization, async (req, res) => {
+  router.get("/get-invitation-code/:invitationCode", authorization, async (req, res) => {
     try {
-      const monthPaid = await pool.query(
-        "SELECT * FROM participants WHERE id = $1 AND month BETWEEN $2 AND $3;",
-        [req.user.id, req.body.month, req.body.month + 5]
+      const {invitationCode} = req.params;
+      const invitation_code = await pool.query(
+        "SELECT invitation_code FROM rounds WHERE id = $1;",
+        [invitationCode]
       );
-      res.json(monthPaid.rows);
+      res.json(invitation_code);
     } catch (error) {
       console.log(error.message);
       res.status(500).json("Server Error");

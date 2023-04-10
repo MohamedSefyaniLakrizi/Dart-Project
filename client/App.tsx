@@ -13,6 +13,7 @@ import AuthContext from './AuthContext';
 import AddRound from './routes/AddRound';
 import AddRib from './routes/AddRib';
 import AddRibSuccessful from './routes/AddRibSuccessful';
+import AddRoundSuccessful from './routes/AddRoundSuccessful';
 import * as Font from 'expo-font';
 
 
@@ -49,6 +50,7 @@ const AppTabs: React.FC<AppTabsProps> = () => {
       <Stack.Screen name="AddRound" component={AddRound} options={{ headerShown: true, title: 'Add Round' }} />
       <Stack.Screen name="AddRib" component={AddRib} options={{ headerShown: true, title: 'Add Rib' }} />
       <Stack.Screen name="AddRibSuccessful" component={AddRibSuccessful} options={{ headerShown: false, title: 'Add Rib Successful' }} />
+      <Stack.Screen name="AddRoundSuccessful" component={AddRoundSuccessful} options={{ headerShown: false, title: 'Add Round Successful' }} />
     </Stack.Navigator>
   );
 };

@@ -40,10 +40,9 @@ const AddRound: React.FC<AddRoundProps> = ({navigation}) => {
       });
       if (response.ok) {
         console.log('Round created successfully');
-        setTimeout(() => {
-          setIsLoading(false);
-          navigation.navigate('MainTabs', { screen: 'Dart' });
-        }, 2000); // 2 seconds delay before navigating to Dart page
+        AsyncStorage.setItem('invitation_code', response.headers.get('invitation_code'));
+        setIsLoading(false);
+        navigation.navigate('AppTabs', { screen: 'AddRoundSuccessful' });
       }
     } catch (error) {
       console.error('Error creating round:', error);
