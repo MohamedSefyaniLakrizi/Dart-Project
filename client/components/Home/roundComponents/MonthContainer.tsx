@@ -33,10 +33,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     alignItems: 'center',
-    contentWrapper: {
-        flex: 1, // Take up the remaining space in the row
-        justifyContent: 'center', // Center the content vertically
-      },
     
   },
 });

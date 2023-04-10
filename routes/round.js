@@ -18,7 +18,7 @@ router.post("/add", authorization, async (req, res) => {
     const { name, amount, duration } = req.body;
 
     function generateInvitationCode() {
-      return Math.floor(100000 + Math.random() * 900000);
+      return Math.floor(1000000 + Math.random() * 9000000);
     }
     
     // Check if the invitation code already exists in the database

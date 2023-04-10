@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     paddingRight: 2,
     paddingTop: 30,
     paddingBottom: 16,
-    backgroundColor: "rgba(255, 255, 255, 0)",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     alignSelf: 'center',
     marginHorizontal: 0,
     marginTop: 0,
