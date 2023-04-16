@@ -2,7 +2,7 @@
 Capstone Project Dart App   
 
 
-Dart AppDart App is a mobile application designed to digitalize Moroccan tontines (Dart) by streamlining the process of managing rounds, participants, and payments. This app is built using the PER-Native stack, comprising PostgreSQL, Express, React Native, and Node.js.   
+Dart is a mobile application designed to digitalize Moroccan tontines (also called Dart) by streamlining the process of managing rounds, participants, and payments. This app is built using the PER-Native stack, comprising PostgreSQL, Express, React Native, and Node.js.   
 Features:  
   
 - User registration and authentication  
@@ -48,3 +48,4 @@ npm start
 ```
 choose the platform you want the app to run on (either scan the QR code and run it using the Expo app, or click on w to run it on the web).  
 The Dart App should now be running on your local machine.  
+P.S: The backend is hosted on render.com, so there is no need to run it, the source-code is available however in the repo.
