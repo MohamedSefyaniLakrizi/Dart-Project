@@ -139,6 +139,7 @@ module.exports = router;
       const participants = await pool.query("SELECT * FROM participants WHERE round_id = $1", [
         round.rows[0].round_id,
       ]);
+      console.log(participants.rows);
       res.json(participants.rows);
     } catch (error) {
       console.log(error.message);

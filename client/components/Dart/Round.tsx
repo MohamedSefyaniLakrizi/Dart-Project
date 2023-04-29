@@ -26,24 +26,31 @@ const RoundComponent: React.FC<RoundProps> = ({navigation}) => {
         },
       });
       const data = await response.json();
+      console.log("data received");
+      
       setParticipants(data);
+      console.log(data);
+      
     } catch (error) {
+      console.log("error fetching participants");
+        
       console.log(error.message);
     }
   };
   
 
-  const renderItem = ({ item }) => (
+  
+  const renderItem = ({ item }: { item: any }) => (
     <UserComponent name={item.username} />
   );
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Round Participants</Text>
       <FlatList
         data={participants}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
         style={styles.list}
       />
     </View>
