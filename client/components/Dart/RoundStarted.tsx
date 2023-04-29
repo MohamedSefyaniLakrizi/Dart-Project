@@ -19,6 +19,25 @@ const RoundComponent: React.FC<RoundProps> = ({ navigation }) => {
   const [usernameMap, setUsernameMap] = useState<Record<number, string>>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+
+  const handleStartDart = async () => {
+    const token = await AsyncStorage.getItem('token');
+    const response = await fetch(
+        'https://dart-d99e.onrender.com/user/startRound',
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                token: token,
+            },
+        }
+    );
+    const data = await response.json();
+    console.log('data received');
+    navigation.navigate('MainTabs', { screen: 'Dart' })
+  };
+
+
   useEffect(() => {
     fetchParticipants();
   }, []);
@@ -69,9 +88,7 @@ const RoundComponent: React.FC<RoundProps> = ({ navigation }) => {
       return <Text>Loading username...</Text>;
     }
 
-    const handleStartDart = () => {
-        navigation.navigate('Dart');
-      };
+
 
     return <UserComponent name={username} />;
   };
@@ -98,9 +115,7 @@ const RoundComponent: React.FC<RoundProps> = ({ navigation }) => {
           keyExtractor={(item) => item.user_id.toString()}
           style={styles.list}
         />
-    <TouchableOpacity style={styles.button} onPress={handleStartDart}>
-        <Text style={styles.buttonText}>Start Dart</Text>
-      </TouchableOpacity>
+    <Text style={styles.title}>Your Dart is Already Started</Text>
     </View>
   );
 };

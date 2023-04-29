@@ -25,7 +25,7 @@ const RoundComponent: React.FC<RoundProps> = ({ navigation }) => {
     const response = await fetch(
         'https://dart-d99e.onrender.com/user/startRound',
         {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 token: token,
