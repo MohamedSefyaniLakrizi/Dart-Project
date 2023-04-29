@@ -7,10 +7,15 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  Keyboard,
+  Image,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingScreen from './components/LoadingScreen';
+import Toast from 'react-native-toast-message';
 
 
 
@@ -33,6 +38,7 @@ type RegisterProps = {
 
 
 const Register: React.FC<RegisterProps> = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -43,6 +49,8 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
     navigation.navigate('Login');
   };
   const handleSubmit = async () => {
+    Keyboard.dismiss();
+    setIsLoading(true);
     setErrorMessage('');
 
     try {
@@ -61,7 +69,11 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
 
       const data = await response.json();
       if (response.ok) {
-        Alert.alert('Success', 'Registration successful');
+        Toast.show({
+          type: 'success',
+          text1: 'Registration successful!',
+          visibilityTime: 2000,
+        });        
         await AsyncStorage.setItem('userStatus', 'registered');
         navigation.navigate('Login'); // Navigate to the Login screen if you have one
       } else {
@@ -80,6 +92,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
           }
       
       }
+      setIsLoading(false);
     } catch (error) {
         setErrorMessage('Something went wrong');
     }
@@ -87,13 +100,18 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.logoContainer}>
+      <Image source={require('./assets/logo-color.png')} style={styles.logo}/>
+      </View>
       <Text style={styles.title}>Register</Text>
+      
       <TextInput
         style={styles.input}
         placeholder="Username"
         onChangeText={setUsername}
         value={username}
       />
+      
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -116,6 +134,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
         onChangeText={setConfirmPassword}
         value={confirmPassword}
       />
+      
       {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Submit</Text>
@@ -123,16 +142,33 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
       <TouchableOpacity onPress={goToLogin}>
         <Text style={styles.linkText}>Already have an account? Login</Text>
       </TouchableOpacity>
+      <LoadingScreen isLoading={isLoading} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  keyboard: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 0,
+  },
   container: {
     flex: 1,
     backgroundColor: '#E5F4F8',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  logo: {
+    width: 300,
+    height: 300,
+    resizeMode: 'contain',
   },
   title: {
     fontSize: 28,

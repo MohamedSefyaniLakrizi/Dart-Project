@@ -6,9 +6,9 @@ export default function SmallMonth() {
     <View style={styles.Month}>
       <View style={styles.Month_Object}>
         <View style={styles.Month_Display}>
-          <Text style={styles.Month_number}>6</Text>
+          <Text style={styles.Month_number}>9</Text>
         </View>
-        <Text style={styles.Month_name}>June</Text>
+        <Text style={styles.Month_name}>Sep.</Text>
         <View style={styles.Line} />
         <View style={styles.Status}>
           <Image

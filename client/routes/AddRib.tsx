@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,7 +21,7 @@ const AddRound: React.FC<AddRoundProps> = ({navigation}) => {
 
   const handleSubmit = async () => {
     // Implement your logic to handle form submission here
-    
+    Keyboard.dismiss();
     try {
         const token = await AsyncStorage.getItem('token');
         const response = await fetch('https://dart-d99e.onrender.com/user/add-Rib', {

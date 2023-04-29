@@ -8,11 +8,14 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  Keyboard,
+  Image,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from './AuthContext';
 import LoadingScreen from './components/LoadingScreen';
+import Toast from 'react-native-toast-message';
 
 type RootStackParamList = {
   Register: undefined;
@@ -47,6 +50,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
   
 
   const handleLogin = async () => {
+    Keyboard.dismiss();
     setIsLoading(true);
     try {
       const response = await fetch('https://dart-d99e.onrender.com/auth/login', {
@@ -63,7 +67,11 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert('Success', 'Login successful');
+        Toast.show({
+          type: 'success',
+          text1: 'Login successful!',
+          visibilityTime: 2000,
+        });
         // Store the JWT token and navigate to the Dashboard screen
         await storeToken(data.jwtToken);
         await AsyncStorage.setItem('token', data.jwtToken);
@@ -85,6 +93,9 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.logoContainer}>
+      <Image source={require('./assets/logo-color.png')} style={styles.logo}/>
+      </View>
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
@@ -114,11 +125,20 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   container: {
     flex: 1,
     backgroundColor: '#E5F4F8',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  logo: {
+    width: 300,
+    height: 300,
+    resizeMode: 'contain',
   },
   title: {
     fontSize: 28,

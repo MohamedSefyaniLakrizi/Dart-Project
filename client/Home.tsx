@@ -85,7 +85,7 @@ const Home: React.FC<HomeProps> = ({navigation}) => {
               <MonthContainer>
                 <SmallMonthWrapper />
               </MonthContainer>
-              <Text>Ad Space</Text>
+              <Text style={styles.ad}>Ad Space</Text>
             </View>
           ) : (
             <View style={styles.container2}>
@@ -125,6 +125,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#E5F4F8',
+  },
+  ad: {
+    fontSize: 24,
+    color: '#222E50',
+    fontWeight: 'bold',
+    width: '100%',
+    textAlign: 'center',
   },
 });
 

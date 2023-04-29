@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -23,6 +24,7 @@ const AddRound: React.FC<AddRoundProps> = ({navigation}) => {
   const numbers = Array.from({length: 10}, (_, i) => i + 1);
 
   const handleSubmit = async () => {
+    Keyboard.dismiss();
     setIsLoading(true);
     try {
       const token = await AsyncStorage.getItem('token');
@@ -40,7 +42,10 @@ const AddRound: React.FC<AddRoundProps> = ({navigation}) => {
       });
       if (response.ok) {
         console.log('Round created successfully');
-        AsyncStorage.setItem('invitation_code', response.headers.get('invitation_code'));
+        console.log(response);
+        const res = await response.json();
+        //await localStorage.setItem('invitation_code', res.invitation_code);
+        await AsyncStorage.setItem('invitation_code', res.invitation_code.toString());
         setIsLoading(false);
         navigation.navigate('AppTabs', { screen: 'AddRoundSuccessful' });
       }

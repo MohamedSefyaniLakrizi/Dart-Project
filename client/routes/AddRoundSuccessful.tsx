@@ -3,20 +3,14 @@ import React, {useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 function AddRoundSuccessful({ navigation }) {
-    const [invitationCode, setInvitationCode] = useState<string | null>(null);
+    const [invitation_code, setInvitationCode] = useState<number | null>(null);
     const fetchUserData = async () => {
         try {
-    const invitation_code = await AsyncStorage.getItem('invitation_code');
-    const token = await AsyncStorage.getItem('token');
-    const response = await fetch('https://dart-d99e.onrender.com/round/get-invitation-code/' + invitation_code, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            token: token,
-        },
-    });
-    const res = await response.json();
-    setInvitationCode(res.invitation_code);
+          setInvitationCode(parseInt(await AsyncStorage.getItem('invitation_code'), 10));
+
+    console.log(invitation_code);
+    
+    
 } catch (error) {
     console.error('Error fetching user data:', error);
 }
@@ -31,7 +25,7 @@ function AddRoundSuccessful({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.message}>Votre Code d'Invitation est:</Text>
-        <Text style={styles.message}>{invitationCode}</Text>
+        <Text style={styles.message}>{invitation_code}</Text>
         <Text style={styles.message}>Veulliez l'envoyer à tout votre groupe!</Text>
       <TouchableOpacity
         style={styles.button}

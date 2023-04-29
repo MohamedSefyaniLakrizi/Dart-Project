@@ -2,15 +2,18 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Month from './Month';
 import SmallMonth from './SmallMonth';
+import SmallMonth2 from './SmallMonth2';
+import SmallMonth3 from './SmallMonth3';
+import SmallMonth4 from './SmallMonth4';
 
 const SmallMonthWrapper = () => {
     return (
       <View style={styles.wrapper}>
         <Month />
         <SmallMonth />
-        <SmallMonth />
-        <SmallMonth />
-        <SmallMonth />
+        <SmallMonth2 />
+        <SmallMonth3 />
+        <SmallMonth4 />
       </View>
     );
   };

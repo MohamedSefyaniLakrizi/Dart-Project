@@ -117,3 +117,14 @@ router.post("/add", authorization, async (req, res) => {
   });
 
 module.exports = router;
+
+  router.post('/add-by-invitation-code', authorization, async (req, res) => {
+    try{
+      const { invitationCode,  } = req.body;
+      const round = await pool.query("SELECT id WHERE invitation_code = $1", [invitationCode]);
+      await pool.query("INSERT INTO participants (user_id, round_id) VALUES ($1, $2) RETURNING *", [req.user.id, round.rows[0].id]);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).json("Server Error");
+    }
+  });

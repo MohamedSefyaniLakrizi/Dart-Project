@@ -15,6 +15,7 @@ import AddRib from './routes/AddRib';
 import AddRibSuccessful from './routes/AddRibSuccessful';
 import AddRoundSuccessful from './routes/AddRoundSuccessful';
 import * as Font from 'expo-font';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const Stack = createStackNavigator();
@@ -35,10 +36,26 @@ function AuthStack() {
 const MainTabs: React.FC = () => {
   return (
     <BottomTab.Navigator screenOptions={{ headerShown: false }}>
-      <BottomTab.Screen name="Home" component={Home} />
-      <BottomTab.Screen name="Dart" component={Dart} />
-      <BottomTab.Screen name="Payment" component={Payment} />
-      <BottomTab.Screen name="Profile" component={Profile} />
+      <BottomTab.Screen name="Home" component={Home} options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" color={color} size={size} />
+          ),
+        }} />
+      <BottomTab.Screen name="Dart" component={Dart} options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="refresh" color={color} size={size} />
+          ),
+        }}/>
+      <BottomTab.Screen name="Payment" component={Payment} options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="credit-card" color={color} size={size} />
+          ),
+        }}/>
+      <BottomTab.Screen name="Profile" component={Profile} options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="cog" color={color} size={size} />
+          ),
+        }}/>
     </BottomTab.Navigator>
   );
 };

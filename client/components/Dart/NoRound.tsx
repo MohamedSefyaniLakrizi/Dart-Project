@@ -25,7 +25,39 @@ const NoRoundComponent: React.FC<NoRoundProps> = ({navigation}) => {
     setInvitationCode(text);
   };
 
-  const sendInvitation = () => {
+  const sendInvitation = async () => {
+    
+    try{
+      const token = await AsyncStorage.getItem('token');
+      
+      if (token) {
+        const response = await fetch('https://dart-d99e.onrender.com/round/add-by-invitation-code', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            token: token,
+          },
+          body: JSON.stringify({
+            invitationCode,
+          }),
+        });
+  
+        const data = await response.json();
+  
+        console.log(data.user);
+  
+        if (response.ok) {
+          navigation.navigate('AppTabs', { screen: 'AddRoundSuccessful' });
+          } else {
+          console.log(response);
+          }
+        } else {
+          console.error('Failed to fetch group data');
+        }
+    } catch (err){
+      console.log(err);
+    }
+
     console.log('Send invitation clicked');
     // Add your logic to send an invitation here
   };

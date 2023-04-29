@@ -110,6 +110,7 @@ const Dart: React.FC<HomeProps> = ({navigation}) => {
                 </View>
               ) : hasGroup === 1 ? (
                 <View style={styles.container}>
+                  
                   <Text> You Already have your Dart!</Text>
                 </View>
               ) : (
