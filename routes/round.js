@@ -121,8 +121,8 @@ module.exports = router;
   router.post('/add-by-invitation-code', authorization, async (req, res) => {
     try{
       const { invitationCode,  } = req.body;
-      const round = await pool.query("SELECT * FROM rounds WHERE invitation_code = $1", [invitationCode]);
-      await pool.query("INSERT INTO participants (user_id, round_id) VALUES ($1, $2) RETURNING *", [req.user.id, round.rows[0].id]);
+      const round = await pool.query("SELECT * FROM rounds WHERE invitation_code = $1;", [invitationCode]);
+      await pool.query("INSERT INTO participants (user_id, round_id) VALUES ($1, $2) RETURNING *;", [req.user.id, round.rows[0].id]);
       res.json("Round added successfully");
     } catch (error) {
       console.log(error.message);
@@ -148,7 +148,7 @@ module.exports = router;
 
   router.get("/get-round", async (req, res) => {
     try {
-      const round = await pool.query("SELECT * FROM participants WHERE user_id = $1", [req.user.id]);
+      const round = await pool.query("SELECT * FROM participants WHERE user_id = $1;", [req.user.id]);
       res.json(round.rows[0]);
     } catch (error) {
       console.log(error.message);
