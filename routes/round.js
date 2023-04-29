@@ -146,7 +146,7 @@ module.exports = router;
   });
   
 
-  router.get("get-round", async (req, res) => {
+  router.get("/get-round", async (req, res) => {
     try {
       const round = await pool.query("SELECT * FROM rounds WHERE id = $1", [req.user.id]);
       res.json(round.rows[0]);
