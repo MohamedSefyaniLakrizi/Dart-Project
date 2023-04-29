@@ -131,8 +131,8 @@ module.exports = router;
   });
   router.get("/get-participants",authorization, async (req, res) => {
     try {
-      const round = await pool.query("SELECT round_id FROM participants WHERE user_id = $1", [req.header("id")]);
-      console.log(req.header("id"));
+      const round = await pool.query("SELECT round_id FROM participants WHERE user_id = $1", [req.user.id]);
+      console.log(req.user.id);
       if (!round.rows[0]) {
         // Return an error response if the round object is undefined
         return res.status(400).json({ message: "No round found for this user" });
