@@ -35,4 +35,16 @@ router.get('/:user_id', async (req, res) => {
   }
 });
 
+app.post('/startRound', async (req, res) => {
+    try {
+      const round = await pool.query('SELECT * FROM participants WHERE user_id = $1', [req.user.id]);
+      await pool.query('UPDATE rounds SET started = true WHERE id = $1', [round.rows[0].round_id]);
+      res.status(200).json({ message: 'Round started successfully!' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error starting round' });
+    }
+  });
+
+
 module.exports = router;
