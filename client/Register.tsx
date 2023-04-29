@@ -79,15 +79,20 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
       } else {
         if (data === 'This email already exists') {
             setErrorMessage(data || 'This email already exists');
+            setIsLoading(false);
         } else if (data === 'This username is Taken') {
             setErrorMessage(data || 'This username is Taken');
+            setIsLoading(false);
         } else if (data === 'Passwords do not match') {
             setErrorMessage(data || 'Passwords do not match');
+            setIsLoading(false);
         } else {
             setErrorMessage(data || 'Registration failed');
+            setIsLoading(false);
         }
         if (password !== confirmPassword) {
             Alert.alert('Error', 'Passwords do not match');
+            setIsLoading(false);
             return;
           }
       

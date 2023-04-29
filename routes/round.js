@@ -129,3 +129,19 @@ module.exports = router;
       res.status(500).json("Server Error");
     }
   });
+
+  router.get("/get-participants", async (req, res) => {
+
+    try {
+
+      const round = await pool.query("SELECT * FROM participants WHERE user_id = $1", [req.user.id]);
+
+      const participants = await pool.query("SELECT * FROM participants WHERE round_id = $1", [
+        round.rows[0].round_id,
+      ]);
+      res.json(participants.rows);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).json("Server Error");
+    }
+  });

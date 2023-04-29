@@ -47,7 +47,7 @@ const NoRoundComponent: React.FC<NoRoundProps> = ({navigation}) => {
         console.log(data.user);
   
         if (response.ok) {
-          navigation.navigate('AppTabs', { screen: 'AddRoundSuccessful' });
+          navigation.navigate('AppTabs', { screen: 'AddRoundSuccessfulInvited' });
           } else {
           console.log(response);
           }

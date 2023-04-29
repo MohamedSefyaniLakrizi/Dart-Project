@@ -14,6 +14,7 @@ import AddRound from './routes/AddRound';
 import AddRib from './routes/AddRib';
 import AddRibSuccessful from './routes/AddRibSuccessful';
 import AddRoundSuccessful from './routes/AddRoundSuccessful';
+import AddRoundSuccessfulInvited from './routes/AddRoundSuccessfulInvited';
 import * as Font from 'expo-font';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -68,6 +69,7 @@ const AppTabs: React.FC<AppTabsProps> = () => {
       <Stack.Screen name="AddRib" component={AddRib} options={{ headerShown: true, title: 'Add Rib' }} />
       <Stack.Screen name="AddRibSuccessful" component={AddRibSuccessful} options={{ headerShown: false, title: 'Add Rib Successful' }} />
       <Stack.Screen name="AddRoundSuccessful" component={AddRoundSuccessful} options={{ headerShown: false, title: 'Add Round Successful' }} />
+      <Stack.Screen name="AddRoundSuccessfulInvited" component={AddRoundSuccessfulInvited} options={{ headerShown: false, title: 'Add Round Successful Invited' }} />
     </Stack.Navigator>
   );
 };

@@ -82,6 +82,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
         
       } else {
         setErrorMessage(data.message || 'Login failed');
+        setIsLoading(false);
       }
     } catch (error) {
         setErrorMessage('Something went wrong');
