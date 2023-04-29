@@ -129,20 +129,18 @@ module.exports = router;
       res.status(500).json("Server Error");
     }
   });
-
   router.get("/get-participants", async (req, res) => {
-
     try {
-
       const round = await pool.query("SELECT round_id FROM participants WHERE user_id = $1", [req.header.id]);
-      console.log(round.rows[0].round_id);
-      /*const participants = await pool.query("SELECT * FROM participants WHERE round_id = $1", [
-        round.round_id,
-      ]);
-      console.log(participants.rows);*/
+      if (!round.rows[0]) {
+        // Return an error response if the round object is undefined
+        return res.status(400).json({ message: "No round found for this user" });
+      }
+      const participants = await pool.query("SELECT * FROM participants WHERE round_id = $1", [round.rows[0].round_id]);
       res.json(participants.rows);
     } catch (error) {
       console.log(error.message);
       res.status(500).json("Server Error");
     }
   });
+  
