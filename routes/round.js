@@ -129,7 +129,7 @@ module.exports = router;
       res.status(500).json("Server Error");
     }
   });
-  router.get("/get-participants", async (req, res) => {
+  router.get("/get-participants",authorization, async (req, res) => {
     try {
       const round = await pool.query("SELECT round_id FROM participants WHERE user_id = $1", [req.header.id]);
       console.log(req.header.id);
