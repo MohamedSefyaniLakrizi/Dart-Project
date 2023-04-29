@@ -57,8 +57,6 @@ const NoRoundComponent: React.FC<NoRoundProps> = ({navigation}) => {
     } catch (err){
       console.log(err);
     }
-
-    console.log('Send invitation clicked');
     // Add your logic to send an invitation here
   };
 
