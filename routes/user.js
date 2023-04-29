@@ -35,7 +35,7 @@ router.get('/:user_id', async (req, res) => {
   }
 });
 
-router.post('/startRound', async (req, res) => {
+router.get('/startRound', async (req, res) => {
     try {
       const round = await pool.query('SELECT * FROM participants WHERE user_id = $1', [req.user.id]);
       console.log(round.rows[0]);
