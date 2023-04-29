@@ -41,7 +41,7 @@ const RoundComponent: React.FC<RoundProps> = ({navigation}) => {
 
   
   const renderItem = ({ item }: { item: any }) => (
-    <UserComponent name={item.username} />
+    <UserComponent name={item.username.toString()} />
   );
   
   return (
