@@ -16,9 +16,9 @@ const Dart: React.FC<HomeProps> = ({navigation}) => {
     const [userId, setUserId] = useState<number | null>(null);
     const [userEmail, setUserEmail] = useState<string | null>(null);
     const [hasGroup, setHasGroup] = useState<number | null>(null);
+    const [r_data, setR_Data] = useState<object | null>(null);
 
-
-
+    let check = false;
 
     const fetchUserData = async () => {
         try {
@@ -54,57 +54,53 @@ const Dart: React.FC<HomeProps> = ({navigation}) => {
       const checkGroup = async () => {
         try {
           const token = await AsyncStorage.getItem('token');
-    
-          if (token) {
-            // Replace this with your actual API endpoint to check if a group is created
-            const response = await fetch('https://dart-d99e.onrender.com/home', {
+      
+          if (!token) {
+            return;
+          }
+      
+          const [response, res] = await Promise.all([
+            fetch('https://dart-d99e.onrender.com/home', {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
                 token: token,
               },
-            });
-    
-            const data = await response.json();
+            }),
+            fetch('https://dart-d99e.onrender.com/round/get-round', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                token: token,
+              },
+            }),
+          ]);
+      
+          const data = await response.json();
+          const roundData = await res.json();
+      
+          console.log(data.participants);
+      
+          if (response.ok) {
+            console.log("round data"  + roundData);
             
-            console.log(data.participants);
-
-            try{
-              const res = await fetch('https://dart-d99e.onrender.com/round/get-round', {
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                  token: token,
-                },
-
-              });
-
-              const r_data = await res.json();
-        
-              const data = await response.json();
-              
-              console.log(data);
-            } catch (err) {
-              console.log(err);
+            if (roundData.started === true) {
+              setHasGroup(3);
+              return;
             }
-            
-            
-            if (response.ok) {
-              if (data.participants === undefined){
-                if(data.user.rib === null)
-                setHasGroup(0);
-                else setHasGroup(2);
-              }
-              
-              else setHasGroup(1);
-            } else {
-              console.error('Failed to fetch group data');
-            }
+      
+            if (data.participants === undefined) {
+              if (data.user.rib === null) setHasGroup(0);
+              else setHasGroup(2);
+            } else setHasGroup(1);
+          } else {
+            console.error('Failed to fetch group data');
           }
         } catch (error) {
           console.error('Error fetching group data:', error);
         }
       };
+      
       
       //call the fetchUserData function when the component mounts
       useEffect(() => {
