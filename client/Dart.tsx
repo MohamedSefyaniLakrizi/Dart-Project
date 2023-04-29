@@ -68,6 +68,25 @@ const Dart: React.FC<HomeProps> = ({navigation}) => {
             const data = await response.json();
             
             console.log(data.participants);
+
+            try{
+              const res = await fetch('https://dart-d99e.onrender.com/round/get-round', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  token: token,
+                },
+
+              });
+
+              const r_data = await res.json();
+        
+              const data = await response.json();
+              
+              console.log(data);
+            } catch (err) {
+              console.log(err);
+            }
             
             
             if (response.ok) {

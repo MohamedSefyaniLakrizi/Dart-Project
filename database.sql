@@ -18,6 +18,7 @@ CREATE TABLE rounds (
   amount INTEGER NOT NULL,
   duration INTEGER NOT NULL,
   invitation_code INTEGER,
+  started BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

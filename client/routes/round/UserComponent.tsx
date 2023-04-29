@@ -15,10 +15,10 @@ const UserComponent = ({ name }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '80%',
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    padding: 20,
     backgroundColor: '#fff',
     borderRadius: 5,
     marginBottom: 10,
