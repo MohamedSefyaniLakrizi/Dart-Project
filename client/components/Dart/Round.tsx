@@ -3,8 +3,12 @@ import { StyleSheet, View, Text, FlatList } from 'react-native';
 import axios from 'axios';
 import UserComponent from '../../routes/round/UserComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-const Round = () => {
+type RoundProps = {
+    navigation: StackNavigationProp<any>;
+  };
+const RoundComponent: React.FC<RoundProps> = ({navigation}) => {
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
@@ -63,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Round;
+export default RoundComponent;

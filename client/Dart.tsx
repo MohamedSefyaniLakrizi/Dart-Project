@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NoRoundComponent from './components/Dart/NoRound';
+import RoundComponent from './components/Dart/Round';
 import AddRound from './routes/AddRound';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Swiper from 'react-native-swiper';
@@ -110,8 +111,7 @@ const Dart: React.FC<HomeProps> = ({navigation}) => {
                 </View>
               ) : hasGroup === 1 ? (
                 <View style={styles.container}>
-                  
-                  <Text> You Already have your Dart!</Text>
+                  <RoundComponent navigation={navigation}/>
                 </View>
               ) : (
                 <View style={styles.container}>
@@ -147,3 +147,6 @@ const styles = StyleSheet.create({
 });
 
 export default Dart;
+
+
+//
