@@ -135,11 +135,11 @@ module.exports = router;
     try {
 
       const round = await pool.query("SELECT * FROM participants WHERE user_id = $1", [req.user.id]);
-
-      const participants = await pool.query("SELECT * FROM participants WHERE round_id = $1", [
+      console.log(round.rows);
+      /*const participants = await pool.query("SELECT * FROM participants WHERE round_id = $1", [
         round.round_id,
       ]);
-      console.log(participants.rows);
+      console.log(participants.rows);*/
       res.json(participants.rows);
     } catch (error) {
       console.log(error.message);
