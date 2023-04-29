@@ -21,7 +21,7 @@ router.post("/add-Rib", authorization, async (req, res) => {
 });
 
 
-router.get('/:user_id', authorization, async (req, res) => {
+router.get('/:user_id', async (req, res) => {
     const user_id = req.params.user_id;
   try {
     const user = await pool.query('SELECT * FROM users WHERE id = $1', [user_id]);

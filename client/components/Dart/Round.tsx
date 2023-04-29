@@ -15,6 +15,8 @@ type UserDataItem = {
 
 const RoundComponent: React.FC<RoundProps> = ({ navigation }) => {
   const [userData, setUserData] = useState<UserDataItem[]>([]);
+  const [usernameMap, setUsernameMap] = useState<Record<number, string>>({});
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetchParticipants();
@@ -41,30 +43,27 @@ const RoundComponent: React.FC<RoundProps> = ({ navigation }) => {
     } catch (error) {
       console.log('error fetching participants');
       console.log(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const fetchUsername = async (userId: number) => {
+  const fetchUsername = async (user_id: number) => {
     try {
       const response = await fetch(
-        `https://dart-d99e.onrender.com/user/${userId}`
+        `https://dart-d99e.onrender.com/user/${user_id}`
       );
       const data = await response.json();
       return data.username;
     } catch (error) {
-      console.log(`error fetching username for user ID ${userId}`);
+      console.log(`error fetching username for user ID ${user_id}`);
       console.log(error.message);
       return '';
     }
   };
 
-  const renderItem = ({ item }: { item: UserDataItem }) => {
-    const [username, setUsername] = useState<string | null>(null);
-
-    useEffect(() => {
-      fetchUsername(item.user_id).then((username) => setUsername(username));
-    }, [item.user_id]);
-
+  const renderUser = (user_id: number) => {
+    const username = usernameMap[user_id];
     if (!username) {
       return <Text>Loading username...</Text>;
     }
@@ -72,15 +71,32 @@ const RoundComponent: React.FC<RoundProps> = ({ navigation }) => {
     return <UserComponent name={username} />;
   };
 
+  useEffect(() => {
+    const fetchAllUsernames = async () => {
+      const usernames: Record<number, string> = {};
+      for (const user of userData) {
+        const username = await fetchUsername(user.user_id);
+        usernames[user.user_id] = username;
+      }
+      setUsernameMap(usernames);
+    };
+
+    fetchAllUsernames();
+  }, [userData]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Round Participants</Text>
-      <FlatList
-        data={userData}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.user_id.toString()}
-        style={styles.list}
-      />
+      {isLoading ? (
+        <Text>Loading participants...</Text>
+      ) : (
+        <FlatList
+          data={userData}
+          renderItem={({ item }) => renderUser(item.user_id)}
+          keyExtractor={(item) => item.user_id.toString()}
+          style={styles.list}
+        />
+      )}
     </View>
   );
 };
