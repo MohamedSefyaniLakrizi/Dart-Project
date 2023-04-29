@@ -21,4 +21,18 @@ router.post("/add-Rib", authorization, async (req, res) => {
 });
 
 
+router.get('/:user_id', authorization, async (req, res) => {
+    const user_id = req.params.user_id;
+  try {
+    const user = await pool.query('SELECT * FROM users WHERE id = $1', [user_id]);
+    if (user.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    return res.json(user.rows[0]);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 module.exports = router;

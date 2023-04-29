@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
-import axios from 'axios';
 import UserComponent from '../../routes/round/UserComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type RoundProps = {
-    navigation: StackNavigationProp<any>;
-  };
-const RoundComponent: React.FC<RoundProps> = ({navigation}) => {
-  const [participants, setParticipants] = useState([]);
+  navigation: StackNavigationProp<any>;
+};
+
+type UserDataItem = {
+  user_id: number;
+  username?: string;
+};
+
+const RoundComponent: React.FC<RoundProps> = ({ navigation }) => {
+  const [userData, setUserData] = useState<UserDataItem[]>([]);
 
   useEffect(() => {
     fetchParticipants();
@@ -18,39 +23,62 @@ const RoundComponent: React.FC<RoundProps> = ({navigation}) => {
   const fetchParticipants = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch('https://dart-d99e.onrender.com/round/get-participants', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          token: token,
-        },
-      });
+      const response = await fetch(
+        'https://dart-d99e.onrender.com/round/get-participants',
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            token: token,
+          },
+        }
+      );
       const data = await response.json();
-      console.log("data received");
-      
-      setParticipants(data);
+      console.log('data received');
+
+      setUserData(data);
       console.log(data);
-      
     } catch (error) {
-      console.log("error fetching participants");
-        
+      console.log('error fetching participants');
       console.log(error.message);
     }
   };
-  
 
-  
-  const renderItem = ({ item }: { item: any }) => (
-    <UserComponent name={item.username.toString()} />
-  );
-  
+  const fetchUsername = async (userId: number) => {
+    try {
+      const response = await fetch(
+        `https://dart-d99e.onrender.com/user/${userId}`
+      );
+      const data = await response.json();
+      return data.username;
+    } catch (error) {
+      console.log(`error fetching username for user ID ${userId}`);
+      console.log(error.message);
+      return '';
+    }
+  };
+
+  const renderItem = ({ item }: { item: UserDataItem }) => {
+    const [username, setUsername] = useState<string | null>(null);
+
+    useEffect(() => {
+      fetchUsername(item.user_id).then((username) => setUsername(username));
+    }, [item.user_id]);
+
+    if (!username) {
+      return <Text>Loading username...</Text>;
+    }
+
+    return <UserComponent name={username} />;
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Round Participants</Text>
       <FlatList
-        data={participants}
+        data={userData}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.user_id.toString()}
         style={styles.list}
       />
     </View>
